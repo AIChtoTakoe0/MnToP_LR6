@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{# Статическая страница (задание 3): содержит разметку и CSS,
+   динамических данных почти нет #}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="card">
+        <h1>{{ title }}</h1>
+        <p>Лабораторная работа № 6. Веб-программирование на Python.</p>
+        <p>Использованы: Flask, шаблонизатор Jinja2, статические файлы (CSS), FastAPI.</p>
+        <a class="btn" href="{{ url_for('students') }}">К списку студентов</a>
+    </div>
+</body>
+</html>

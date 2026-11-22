@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{# Это комментарий Jinja2: в итоговый HTML он не попадает.
+   Flask ищет шаблоны в папке templates/ #}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    {# url_for('static', filename=...) строит корректную ссылку на файл в static/ #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="card">
+        <h1>{{ title }}</h1>
+
+        <table>
+            <tr><th>ID</th><th>ФИО</th><th>Группа</th><th>Средний балл</th></tr>
+            {# Цикл по списку students, переданному из app.py через render_template.
+               loop — служебный объект Jinja2: loop.index — номер итерации,
+               loop.cycle('odd','even') — чередует классы строк #}
+            {% for s in students %}
+            <tr class="{{ loop.cycle('odd', 'even') }}">
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.group }}</td>
+                <td>{{ '%.2f' | format(s.grade) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {# Фильтр length возвращает длину списка (синтаксис: значение | фильтр) #}
+        <p>Всего студентов: {{ students | length }}</p>
+
+        {# Условие в шаблоне #}
+        {% if not students %}
+        <p class="empty">Список пуст</p>
+        {% endif %}
+
+        <a class="btn" href="{{ url_for('about') }}">О работе</a>
+    </div>
+</body>
+</html>
